@@ -1,0 +1,8 @@
+{
+	"appPort":1080,
+	"dbPort":3306,
+	"dbName":"user26",
+	"dbHost":"localhost",
+	"username":"user26",
+	"password":"user26"
+}
