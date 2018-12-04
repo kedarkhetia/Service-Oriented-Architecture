@@ -25,7 +25,7 @@ public class CreateEventModel {
 	}
 	
 	public boolean isValid() {
-		if(eventname == null || userid == 0 || numtickets == 0) {
+		if(eventname == null || userid <= 0 || numtickets <= 0) {
 			return false;
 		}
 		return true;

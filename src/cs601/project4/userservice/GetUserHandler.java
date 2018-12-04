@@ -92,7 +92,10 @@ public class GetUserHandler extends HttpServlet {
 		}
 		LinkedList<EventIdModel> tickets = new LinkedList<EventIdModel>();
 		while(eventData.next()) {
-			tickets.add(new EventIdModel(eventData.getInt("EVENTID")));
+			int numberOfTickets = eventData.getInt("TICKETS");
+			for(int i=0; i < numberOfTickets; i++) {
+				tickets.add(new EventIdModel(eventData.getInt("EVENTID")));
+			}
 		}
 		res.setTickets(tickets);
 	}

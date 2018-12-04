@@ -23,5 +23,10 @@ public class TransferTicketModel {
 	public void setTargetuser(int targetuser) {
 		this.targetuser = targetuser;
 	}
-	
+	public boolean isValid() {
+		if(eventid <= 0 || tickets <= 0 || targetuser <= 0) {
+			return false;
+		}
+		return true;
+	}
 }

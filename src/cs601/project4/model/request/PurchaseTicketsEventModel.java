@@ -23,4 +23,11 @@ public class PurchaseTicketsEventModel {
 	public void setTickets(int tickets) {
 		this.tickets = tickets;
 	}
+	
+	public boolean isValid() {
+		if(userid <= 0 || eventid <= 0 || tickets <= 0) {
+			return false;
+		}
+		return true;
+	}
 }

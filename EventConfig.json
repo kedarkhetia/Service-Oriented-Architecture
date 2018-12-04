@@ -4,5 +4,7 @@
 	"dbName":"user26",
 	"dbHost":"localhost",
 	"username":"user26",
-	"password":"user26"
+	"password":"user26",
+	"userHost":"localhost",
+	"userPort":2080
 }

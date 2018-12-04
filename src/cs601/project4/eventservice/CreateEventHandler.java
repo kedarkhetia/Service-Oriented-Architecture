@@ -18,11 +18,12 @@ public class CreateEventHandler extends HttpServlet {
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) {
 		try {
+			UserServiceClient userClient = new UserServiceClient();
 			BufferedReader in = request.getReader();
 			Gson gson = new Gson();
 			String bodyText = readBody(in);
 			CreateEventModel body = gson.fromJson(bodyText, CreateEventModel.class);
-			if(body != null && body.isValid()) {
+			if(body != null && body.isValid() && userClient.checkUser(body.getUserid())) {
 				int eventId = DBManager.getInstance().insert(body.getEventname(), body.getUserid(), body.getNumtickets());
 				if(eventId != 0) {
 					response.setContentType("application/json");

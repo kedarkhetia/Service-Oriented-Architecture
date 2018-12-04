@@ -14,6 +14,8 @@ public class EventConfig {
 	private String dbHost;
 	private String username;
 	private String password;
+	private String userHost;
+	private int userPort;
 	
 	private static String CONFIG_PATH = "EventConfig.json";
 	private static EventConfig config;
@@ -35,6 +37,19 @@ public class EventConfig {
 			config = gson.fromJson(sb.toString(), EventConfig.class);
 		}
 		return config;
+	}
+	
+	public String getUserHost() {
+		return userHost;
+	}
+	public void setUserHost(String userHost) {
+		this.userHost = userHost;
+	}
+	public int getUserPort() {
+		return userPort;
+	}
+	public void setUserPort(int userPort) {
+		this.userPort = userPort;
 	}
 	public int getAppPort() {
 		return appPort;

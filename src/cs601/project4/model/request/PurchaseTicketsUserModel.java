@@ -18,7 +18,7 @@ public class PurchaseTicketsUserModel {
 	}
 	
 	public boolean isValid() {
-		if(eventid == 0 || tickets == 0) {
+		if(eventid <= 0 || tickets <= 0) {
 			return false;
 		}
 		return true;

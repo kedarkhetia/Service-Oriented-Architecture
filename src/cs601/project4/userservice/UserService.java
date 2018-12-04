@@ -15,6 +15,7 @@ public class UserService {
 		handler.addServlet(CreateUserHandler.class, "/create");
 		handler.addServlet(PurchaseTicketsHandler.class, "/tickets/add");
 		handler.addServlet(TransferTicketsHandler.class, "/tickets/transfer");
+		handler.addServlet(PingUserHandler.class, "/ping/*");
 		handler.addServlet(GetUserHandler.class, "/*");
 		
 		server.start();

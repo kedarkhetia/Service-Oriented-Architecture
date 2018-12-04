@@ -20,16 +20,22 @@ public class TransferTicketsHandler extends HttpServlet {
 		Gson gson = new Gson();
 		String bodyText = readBody(in);
 		TransferTicketModel body = gson.fromJson(bodyText, TransferTicketModel.class);
-		response.setStatus(setResponse(body, userId));
+		if(!body.isValid()) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		}
+		else {
+			response.setStatus(transferTickets(body, userId));
+		}
 	}
 	
-	public int setResponse(TransferTicketModel body, int userId) {
+	public int transferTickets(TransferTicketModel body, int userId) {
 		try {
 			boolean res;
 			ResultSet resultSet = DBManager.getInstance().selectTickets(body.getEventid(), userId);
-			if(resultSet.next()) {
+			ResultSet targetUserSet = DBManager.getInstance().select(body.getTargetuser());
+			if(resultSet.next() && targetUserSet.next()) {
 				int tickets = resultSet.getInt("TICKETS");
-				if(tickets > body.getTickets()) {
+				if(tickets >= body.getTickets()) {
 					res = DBManager.getInstance().updateTickets(body.getEventid(), userId, tickets - body.getTickets());
 					if(res) {
 						res = res & addTickets(body, body.getTargetuser());
@@ -45,6 +51,9 @@ public class TransferTicketsHandler extends HttpServlet {
 						return HttpServletResponse.SC_BAD_REQUEST;
 					}
 				}
+				else {
+					return HttpServletResponse.SC_BAD_REQUEST;
+				}
 			}
 			else {
 				return HttpServletResponse.SC_BAD_REQUEST;
@@ -52,8 +61,8 @@ public class TransferTicketsHandler extends HttpServlet {
 		} catch (SQLException e) {
 			// TODO Log something here
 			e.printStackTrace();
+			return HttpServletResponse.SC_BAD_REQUEST;
 		}
-		return HttpServletResponse.SC_BAD_REQUEST;
 	}
 	
 	public boolean addTickets(TransferTicketModel body, int userId) {
