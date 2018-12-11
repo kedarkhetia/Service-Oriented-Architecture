@@ -1,9 +1,7 @@
 package cs601.project4.eventservice;
 
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -11,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import cs601.project4.helper.HelperClass;
 import cs601.project4.model.EventConfig;
 import cs601.project4.model.response.PingUserResponseModel;
 import cs601.project4.model.request.PurchaseTicketsEventModel;
@@ -28,7 +27,7 @@ public class UserServiceClient {
 			HttpURLConnection connection = (HttpURLConnection) (new URL("http://" + config.getUserHost() + ":" + config.getUserPort() + "/ping/" + userid)).openConnection();
 			connection.setRequestMethod("GET");
 			connection.connect();
-			String response = validateResponse(connection);
+			String response = HelperClass.validateResponse(connection);
 			Gson gson = new Gson();
 			PingUserResponseModel status = gson.fromJson(response, PingUserResponseModel.class);
 			return status.getStatus();
@@ -64,15 +63,5 @@ public class UserServiceClient {
 			e.printStackTrace();
 			return false;
 		}
-	}
-
-	public String validateResponse(HttpURLConnection connection) throws IOException {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-		String line;
-		String response = "";
-		while((line = reader.readLine()) != null) {
-			response += line;
-		}
-		return response;
 	}
 }

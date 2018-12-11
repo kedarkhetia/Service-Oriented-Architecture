@@ -1,9 +1,7 @@
 package cs601.project4.frontendservice;
 
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.LinkedList;
@@ -12,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import cs601.project4.helper.HelperClass;
 import cs601.project4.model.FrontEndConfig;
 import cs601.project4.model.request.CreateUserModel;
 import cs601.project4.model.request.TransferTicketModel;
@@ -34,7 +33,7 @@ public class UserServiceClient {
 			HttpURLConnection connection = (HttpURLConnection) (new URL(URL + "/" + userid)).openConnection();
 			connection.setRequestMethod("GET");
 			connection.connect();
-			String responseData = validateResponse(connection);
+			String responseData = HelperClass.validateResponse(connection);
 			Gson gson = new Gson();
 			GetUserResponseUserModel userResponse = gson.fromJson(responseData, GetUserResponseUserModel.class);
 			GetUserResponseModel response = new GetUserResponseModel();
@@ -87,22 +86,12 @@ public class UserServiceClient {
 			if(connection.getResponseCode() == HttpServletResponse.SC_BAD_REQUEST) {
 				return null;
 			}
-			String response = validateResponse(connection);
+			String response = HelperClass.validateResponse(connection);
 			return gson.fromJson(response, CreateUserResponseModel.class);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
-	}
-	
-	public String validateResponse(HttpURLConnection connection) throws IOException {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-		String line;
-		String response = "";
-		while((line = reader.readLine()) != null) {
-			response += line;
-		}
-		return response;
 	}
 }

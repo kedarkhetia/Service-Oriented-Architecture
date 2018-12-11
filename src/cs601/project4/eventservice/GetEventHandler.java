@@ -1,6 +1,5 @@
 package cs601.project4.eventservice;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,12 +36,8 @@ public class GetEventHandler extends HttpServlet {
 			else {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO log something here.
-			e.printStackTrace();
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}

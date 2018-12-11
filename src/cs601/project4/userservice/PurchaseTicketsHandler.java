@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import cs601.project4.helper.HelperClass;
 import cs601.project4.model.request.PurchaseTicketsUserModel;
 
 public class PurchaseTicketsHandler extends HttpServlet {
@@ -19,7 +20,7 @@ public class PurchaseTicketsHandler extends HttpServlet {
 			int userId = (int) request.getAttribute("userid");
 			BufferedReader in = request.getReader();
 			Gson gson = new Gson();
-			String bodyText = readBody(in);
+			String bodyText = HelperClass.readBody(in);
 			PurchaseTicketsUserModel body = gson.fromJson(bodyText, PurchaseTicketsUserModel.class);
 			ResultSet resultSet = DBManager.getInstance().selectTickets(body.getEventid(), userId);
 			response.setStatus(setResponse(resultSet, body, userId));
@@ -46,19 +47,5 @@ public class PurchaseTicketsHandler extends HttpServlet {
 			e.printStackTrace();
 			return HttpServletResponse.SC_BAD_REQUEST;
 		}
-	}
-	
-	public String readBody(BufferedReader in) {
-		StringBuilder sb = new StringBuilder();
-		String line;
-		try {
-			while((line = in.readLine()) != null) {
-				sb.append(line);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return sb.toString();
 	}
 }

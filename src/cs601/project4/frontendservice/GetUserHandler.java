@@ -1,7 +1,5 @@
 package cs601.project4.frontendservice;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServlet;
@@ -10,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import cs601.project4.helper.HelperClass;
 import cs601.project4.model.request.TransferTicketModel;
 import cs601.project4.model.response.GetUserResponseModel;
 
@@ -48,7 +47,7 @@ public class GetUserHandler extends HttpServlet {
 			int userId;
 			if(pathParam.length > 3 && (userId = Integer.parseInt(pathParam[1])) > 0 && request.getPathInfo().endsWith("/tickets/transfer")) {
 				Gson gson = new Gson();
-				TransferTicketModel body = gson.fromJson(readBody(request.getReader()), TransferTicketModel.class);
+				TransferTicketModel body = gson.fromJson(HelperClass.readBody(request.getReader()), TransferTicketModel.class);
 				if(body != null && body.isValid()) {
 					boolean res = client.tranferTickets(body, userId);
 					if(res) {
@@ -69,19 +68,5 @@ public class GetUserHandler extends HttpServlet {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			e.printStackTrace();
 		}
-	}
-	
-	public String readBody(BufferedReader in) {
-		StringBuilder sb = new StringBuilder();
-		String line;
-		try {
-			while((line = in.readLine()) != null) {
-				sb.append(line);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return sb.toString();
 	}
 }

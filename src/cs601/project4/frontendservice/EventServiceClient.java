@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import cs601.project4.helper.HelperClass;
 import cs601.project4.model.FrontEndConfig;
 import cs601.project4.model.request.CreateEventModel;
 import cs601.project4.model.request.PurchaseTicketsEventModel;
@@ -42,7 +43,7 @@ public class EventServiceClient {
 			if(connection.getResponseCode() == HttpServletResponse.SC_BAD_REQUEST) {
 				return null;
 			}
-			String response = validateResponse(connection);
+			String response = HelperClass.validateResponse(connection);
 			return gson.fromJson(response, CreateEventResponseModel.class);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -85,7 +86,7 @@ public class EventServiceClient {
 			if(connection.getResponseCode() == HttpServletResponse.SC_BAD_REQUEST) {
 				return null;
 			}
-			String response = validateResponse(connection);
+			String response = HelperClass.validateResponse(connection);
 			return gson.fromJson(response, GetEventResponseModel.class);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -103,7 +104,7 @@ public class EventServiceClient {
 			if(connection.getResponseCode() == HttpServletResponse.SC_BAD_REQUEST) {
 				return null;
 			}
-			String response = validateResponse(connection);
+			String response = HelperClass.validateResponse(connection);
 			Type listType = new TypeToken<LinkedList<GetEventResponseModel>>(){}.getType();
 			return gson.fromJson(response, listType);
 		} catch (IOException e) {
@@ -111,15 +112,5 @@ public class EventServiceClient {
 			e.printStackTrace();
 			return null;
 		}
-	}
-	
-	public String validateResponse(HttpURLConnection connection) throws IOException {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-		String line;
-		String response = "";
-		while((line = reader.readLine()) != null) {
-			response += line;
-		}
-		return response;
 	}
 }

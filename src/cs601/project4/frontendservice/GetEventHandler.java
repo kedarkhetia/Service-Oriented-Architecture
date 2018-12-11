@@ -1,6 +1,5 @@
 package cs601.project4.frontendservice;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -10,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import cs601.project4.helper.HelperClass;
 import cs601.project4.model.request.PurchaseTicketsModel;
 import cs601.project4.model.response.GetEventResponseModel;
 
@@ -50,7 +50,7 @@ public class GetEventHandler extends HttpServlet {
 			int userId;
 			Gson gson = new Gson();
 			if(pathParam.length > 3 && (eventId = Integer.parseInt(pathParam[1])) > 0 && (userId = Integer.parseInt(pathParam[3])) > 0 && pathParam[2].equals("purchase")) {
-				String bodyText = readBody(request.getReader());
+				String bodyText = HelperClass.readBody(request.getReader());
 				PurchaseTicketsModel body = gson.fromJson(bodyText, PurchaseTicketsModel.class);
 				if(body != null && body.isValid()) {
 					boolean res = client.purchaseTickets(body, eventId, userId);
@@ -70,19 +70,5 @@ public class GetEventHandler extends HttpServlet {
 			e.printStackTrace();
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
-	}
-	
-	public String readBody(BufferedReader in) {
-		StringBuilder sb = new StringBuilder();
-		String line;
-		try {
-			while((line = in.readLine()) != null) {
-				sb.append(line);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return sb.toString();
 	}
 }
