@@ -82,6 +82,9 @@ public class GetEventHandler extends HttpServlet {
 						response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 					}
 				}
+				else {
+					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				}
 			}
 			else {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);

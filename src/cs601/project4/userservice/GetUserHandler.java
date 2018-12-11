@@ -16,7 +16,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 
-import cs601.project4.eventservice.UserServiceClient;
 import cs601.project4.model.response.EventIdModel;
 import cs601.project4.model.response.GetUserResponseUserModel;
 
