@@ -2,7 +2,6 @@ package cs601.project4.userservice;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHandler;
 
 import cs601.project4.model.UserConfig;
 

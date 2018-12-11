@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import cs601.project4.model.request.CreateUserModel;
 import cs601.project4.model.request.PurchaseTicketsModel;
 import cs601.project4.model.response.GetEventResponseModel;
 

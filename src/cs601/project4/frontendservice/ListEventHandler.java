@@ -2,10 +2,7 @@ package cs601.project4.frontendservice;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.LinkedList;
-import java.lang.reflect.Type;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

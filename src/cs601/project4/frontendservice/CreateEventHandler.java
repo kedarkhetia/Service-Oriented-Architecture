@@ -11,9 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import cs601.project4.model.request.CreateEventModel;
-import cs601.project4.model.request.CreateUserModel;
 import cs601.project4.model.response.CreateEventResponseModel;
-import cs601.project4.model.response.CreateUserResponseModel;
 
 public class CreateEventHandler extends HttpServlet {
 	private EventServiceClient client = new EventServiceClient();

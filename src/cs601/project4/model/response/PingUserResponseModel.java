@@ -11,7 +11,7 @@ public class PingUserResponseModel {
 		return status;
 	}
 
-	public void setStatus(boolean userid) {
+	public void setStatus(boolean status) {
 		this.status = status;
 	}
 	

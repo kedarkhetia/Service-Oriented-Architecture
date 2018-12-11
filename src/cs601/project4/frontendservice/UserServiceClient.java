@@ -20,7 +20,6 @@ import cs601.project4.model.response.EventIdModel;
 import cs601.project4.model.response.GetEventResponseModel;
 import cs601.project4.model.response.GetUserResponseModel;
 import cs601.project4.model.response.GetUserResponseUserModel;
-import cs601.project4.model.response.PingUserResponseModel;
 
 public class UserServiceClient {
 	private FrontEndConfig config;

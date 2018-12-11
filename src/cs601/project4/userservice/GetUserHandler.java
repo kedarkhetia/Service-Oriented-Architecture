@@ -15,7 +15,6 @@ import com.google.gson.Gson;
 
 import cs601.project4.model.response.EventIdModel;
 import cs601.project4.model.response.GetUserResponseUserModel;
-import cs601.project4.userservice.DBManager;
 
 public class GetUserHandler extends HttpServlet {
 	
