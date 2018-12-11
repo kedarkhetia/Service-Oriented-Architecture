@@ -33,7 +33,7 @@ public class ListEventHandler extends HttpServlet {
 		try { 
 			Gson gson = new Gson();
 			LinkedList<GetEventResponseModel> responseBody = client.listEvents();
-			if(responseBody != null) {
+			if(responseBody != null && !responseBody.isEmpty()) {
 				response.setContentType("application/json");
 				response.setStatus(HttpServletResponse.SC_OK);
 				PrintWriter out = response.getWriter();
