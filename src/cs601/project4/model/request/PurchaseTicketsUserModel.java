@@ -1,5 +1,10 @@
 package cs601.project4.model.request;
-
+/**
+ * Request object for PurchaseTickets API in UserService.
+ * 
+ * @author kmkhetia
+ *
+ */
 public class PurchaseTicketsUserModel {
 	private int eventid;
 	private int tickets;

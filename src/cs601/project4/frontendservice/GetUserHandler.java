@@ -6,15 +6,30 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 
 import cs601.project4.helper.HelperClass;
 import cs601.project4.model.request.TransferTicketModel;
 import cs601.project4.model.response.GetUserResponseModel;
-
+/**
+ * GetUserHandler is used to get the user details.
+ * 
+ * @author kmkhetia
+ *
+ */
 public class GetUserHandler extends HttpServlet {
+	private static final Logger log = LogManager.getLogger(GetUserHandler.class);
 	private UserServiceClient client = new UserServiceClient();
 	
+	/**
+	 * The method is used to get User details.
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String[] pathParam = request.getPathInfo().split("/");
@@ -36,11 +51,18 @@ public class GetUserHandler extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e);
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
 	}
 	
+	/**
+	 * This method is used to transfer tickets from one user
+	 * to another user.
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String[] pathParam = request.getPathInfo().split("/");
@@ -66,7 +88,7 @@ public class GetUserHandler extends HttpServlet {
 			}
 		} catch (Exception e) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			e.printStackTrace();
+			log.error(e);
 		}
 	}
 }

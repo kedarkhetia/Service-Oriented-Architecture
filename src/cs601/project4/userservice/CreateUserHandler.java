@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 
 import cs601.project4.userservice.DBManager;
@@ -14,8 +17,23 @@ import cs601.project4.helper.HelperClass;
 import cs601.project4.model.request.CreateUserModel;
 import cs601.project4.model.response.CreateUserResponseModel;
 
+/**
+ * CreateUserHandler is used to create new Users. 
+ * 
+ * @author kmkhetia
+ *
+ */ 
 public class CreateUserHandler extends HttpServlet {
+	private final static Logger log = LogManager.getLogger(CreateUserHandler.class);
 	
+	/**
+	 * The method is used to create new Users.
+	 * It is executed when request is received on,
+	 * Request: POST /create
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			BufferedReader in = request.getReader();
@@ -40,8 +58,7 @@ public class CreateUserHandler extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
 		} catch (Exception e) {
-			// TODO log something here.
-			e.printStackTrace();
+			log.error(e);
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
 	}

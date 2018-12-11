@@ -2,6 +2,12 @@ package cs601.project4.model.response;
 
 import java.util.LinkedList;
 
+/**
+ * Response object for GetUser API.
+ * 
+ * @author kmkhetia
+ *
+ */
 public class GetUserResponseModel {
 	private int userid;
 	private String username;

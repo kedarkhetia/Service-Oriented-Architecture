@@ -7,13 +7,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 
 import cs601.project4.model.response.GetEventResponseModel;
 
+/**
+ * ListEventsHandler is used to list all the events. 
+ * 
+ * @author kmkhetia
+ *
+ */ 
 public class ListEventHandler extends HttpServlet {
+	private static final Logger log = LogManager.getLogger(ListEventHandler.class);
 	private EventServiceClient client = new EventServiceClient();
-	
+	/**
+	 * The method is used to get list of events.
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try { 
 			Gson gson = new Gson();
@@ -28,9 +43,8 @@ public class ListEventHandler extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			e.printStackTrace();
+			log.error(e);
 		}
 	}
 }

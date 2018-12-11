@@ -11,12 +11,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 
+import cs601.project4.eventservice.UserServiceClient;
 import cs601.project4.model.response.EventIdModel;
 import cs601.project4.model.response.GetUserResponseUserModel;
 
+/**
+ * GetUserHandler is used to get the user details.
+ * 
+ * @author kmkhetia
+ *
+ */
 public class GetUserHandler extends HttpServlet {
+	private final static Logger log = LogManager.getLogger(GetUserHandler.class);
 	
 	private final String PURCHASE = "add";
 	private final String TRANSFER = "transfer";
@@ -24,6 +35,12 @@ public class GetUserHandler extends HttpServlet {
 	private final String PURCHASE_SERVLET = "/tickets/add";
 	private final String TRANSFER_SERVLET = "/tickets/transfer";
 	
+	/**
+	 * The method is used to get User details.
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String[] pathParam = request.getPathInfo().split("/");
@@ -48,12 +65,19 @@ public class GetUserHandler extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			log.error(e);
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * This method decides to which servlet request should go to
+	 * based on its path. It dispatches the request to /tickets/add
+	 * or /tickets/transfer.
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) {
 		String[] pathParam = request.getPathInfo().split("/");
 		int userId;
@@ -70,9 +94,8 @@ public class GetUserHandler extends HttpServlet {
 					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				}
 			} catch (ServletException | IOException e) {
-				// TODO Auto-generated catch block
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				e.printStackTrace();
+				log.error(e);
 			}
 		}
 		else {
@@ -80,6 +103,15 @@ public class GetUserHandler extends HttpServlet {
 		}
 	}
 
+	/**
+	 * It sets the data based on the received resultset from
+	 * event and user.
+	 * 
+	 * @param userData
+	 * @param eventData
+	 * @param res
+	 * @throws SQLException
+	 */
 	private void setData(ResultSet userData, ResultSet eventData, GetUserResponseUserModel res) throws SQLException {
 		if(userData.next()) {
 			res.setUserid(userData.getInt("USERID"));

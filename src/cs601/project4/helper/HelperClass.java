@@ -4,8 +4,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-
+/**
+ * Helper Class that is used to read data from input stream
+ * 
+ * @author kmkhetia
+ *
+ */
 public class HelperClass {
+	/**
+	 * This method will read the body of the request.
+	 * 
+	 * @param in
+	 * @return
+	 */
 	public static String readBody(BufferedReader in) {
 		StringBuilder sb = new StringBuilder();
 		String line;
@@ -20,19 +31,21 @@ public class HelperClass {
 		return sb.toString();
 	}
 	
+	/**
+	 * This method will validate the response that is received
+	 * upon querying the client.
+	 * 
+	 * @param connection
+	 * @return
+	 */
 	public static String validateResponse(HttpURLConnection connection) {
-		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			String line;
-			String response = "";
-			while((line = reader.readLine()) != null) {
-				response += line;
+			try {
+				BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+				return readBody(reader);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
 			}
-			return response;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
 	}
 }

@@ -9,12 +9,32 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 
+import cs601.project4.eventservice.UserServiceClient;
 import cs601.project4.helper.HelperClass;
 import cs601.project4.model.request.TransferTicketModel;
 
+/**
+ * This is used to transfer tickets from 
+ * one user to another user.
+ * 
+ * @author kmkhetia
+ *
+ */
 public class TransferTicketsHandler extends HttpServlet {
+	private final static Logger log = LogManager.getLogger(TransferTicketsHandler.class);
+	/**
+	 * This method will receive the request and
+	 * pass it to transferTickets method to
+	 * transfer the tickets.
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		int userId = (int) request.getAttribute("userid");
 		BufferedReader in = request.getReader();
@@ -28,7 +48,14 @@ public class TransferTicketsHandler extends HttpServlet {
 			response.setStatus(transferTickets(body, userId));
 		}
 	}
-	
+	/**
+	 * This method will help above method to
+	 * transfers tickets from userId to target user.
+	 * 
+	 * @param body
+	 * @param userId
+	 * @return
+	 */
 	public int transferTickets(TransferTicketModel body, int userId) {
 		try {
 			boolean res = false;
@@ -52,12 +79,17 @@ public class TransferTicketsHandler extends HttpServlet {
 			}
 			return HttpServletResponse.SC_BAD_REQUEST;
 		} catch (SQLException e) {
-			// TODO Log something here
-			e.printStackTrace();
+			log.error(e);
 			return HttpServletResponse.SC_BAD_REQUEST;
 		}
 	}
-	
+	/**
+	 * This method adds tickets to new user.
+	 * 
+	 * @param body
+	 * @param userId
+	 * @return
+	 */
 	public boolean addTickets(TransferTicketModel body, int userId) {
 		try {
 			boolean res;
@@ -71,8 +103,7 @@ public class TransferTicketsHandler extends HttpServlet {
 			}
 			return res;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e);
 			return false;
 		}
 	}

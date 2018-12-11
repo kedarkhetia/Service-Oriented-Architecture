@@ -6,7 +6,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import com.google.gson.Gson;
-
+/**
+ * It represents config file for EventService.
+ * 
+ * @author kmkhetia
+ *
+ */
 public class EventConfig {
 	private int appPort;
 	private int dbPort;

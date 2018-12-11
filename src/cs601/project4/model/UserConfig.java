@@ -7,6 +7,12 @@ import java.nio.file.Paths;
 
 import com.google.gson.Gson;
 
+/**
+ * It represents config file for User service.
+ * 
+ * @author kmkhetia
+ *
+ */
 public class UserConfig {
 	private int appPort;
 	private int dbPort;

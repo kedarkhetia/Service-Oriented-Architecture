@@ -1,5 +1,11 @@
 package cs601.project4.model.response;
 
+/**
+ * Response object for GetEvent API.
+ * 
+ * @author kmkhetia
+ *
+ */
 public class GetEventResponseModel {
 	private int eventid;
 	private String eventname;

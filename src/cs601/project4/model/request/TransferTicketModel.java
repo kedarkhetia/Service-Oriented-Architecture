@@ -1,5 +1,10 @@
 package cs601.project4.model.request;
-
+/**
+ * Request object for TransferTicket API.
+ * 
+ * @author kmkhetia
+ *
+ */
 public class TransferTicketModel {
 	private int eventid;
 	private int tickets;

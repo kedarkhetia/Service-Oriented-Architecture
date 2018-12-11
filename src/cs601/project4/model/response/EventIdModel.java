@@ -1,5 +1,11 @@
 package cs601.project4.model.response;
 
+/**
+ * EventId Model to store EventIds for User Service.
+ * 
+ * @author kmkhetia
+ *
+ */
 public class EventIdModel {
 	int eventid;
 	

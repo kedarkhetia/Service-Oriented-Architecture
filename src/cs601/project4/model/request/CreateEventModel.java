@@ -1,5 +1,10 @@
 package cs601.project4.model.request;
-
+/**
+ * Request object for CreateEvent API.
+ * 
+ * @author kmkhetia
+ *
+ */
 public class CreateEventModel {
 	private int userid;
 	private String eventname;

@@ -7,12 +7,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 
+import cs601.project4.eventservice.UserServiceClient;
 import cs601.project4.model.response.PingUserResponseModel;
 
+/**
+ * This is used to check if user exists or not.
+ * 
+ * @author kmkhetia
+ *
+ */
 public class PingUserHandler extends HttpServlet {
+	private final static Logger log = LogManager.getLogger(PingUserHandler.class);
 	
+	/**
+	 * This is used to check if user exists or not. 
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String[] pathParam = request.getPathInfo().split("/");
@@ -36,9 +50,8 @@ public class PingUserHandler extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			e.printStackTrace();
+			log.error(e);
 		}
 	}
 }

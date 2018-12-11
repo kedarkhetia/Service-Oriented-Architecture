@@ -1,5 +1,10 @@
 package cs601.project4.model.request;
-
+/**
+ * Request object for CreateUser API.
+ * 
+ * @author kmkhetia
+ *
+ */
 public class CreateUserModel {
 	private String username;
 

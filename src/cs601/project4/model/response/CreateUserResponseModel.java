@@ -1,5 +1,10 @@
 package cs601.project4.model.response;
-
+/**
+ * Response object for CreateUser API.
+ * 
+ * @author kmkhetia
+ *
+ */
 public class CreateUserResponseModel {
 	private int userid;
 

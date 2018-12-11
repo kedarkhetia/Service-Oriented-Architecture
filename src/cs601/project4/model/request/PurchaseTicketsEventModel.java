@@ -1,5 +1,11 @@
 package cs601.project4.model.request;
 
+/**
+ * Request object for PurchaseTicket API in Event Service.
+ * 
+ * @author kmkhetia
+ *
+ */
 public class PurchaseTicketsEventModel {
 	private int userid;
 	private int eventid;

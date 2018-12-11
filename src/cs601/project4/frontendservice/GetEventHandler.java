@@ -7,15 +7,31 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 
 import cs601.project4.helper.HelperClass;
 import cs601.project4.model.request.PurchaseTicketsModel;
 import cs601.project4.model.response.GetEventResponseModel;
 
+/**
+ * GetEventHandler is used to get the event.
+ * 
+ * @author kmkhetia
+ *
+ */
 public class GetEventHandler extends HttpServlet {
+	private static final Logger log = LogManager.getLogger(GetEventHandler.class);
 	private EventServiceClient client = new EventServiceClient();
 	
+	/**
+	 * The method is used to get Events.
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String[] pathParam = request.getPathInfo().split("/");
@@ -37,12 +53,17 @@ public class GetEventHandler extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
 		} catch (IOException e) {
-			// TODO log something here.
-			e.printStackTrace();
+			log.error(e);
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
 	}
 	
+	/**
+	 * The method is used to purchase tickets.
+	 *  
+	 * @param request
+	 * @param response
+	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			String[] pathParam = request.getPathInfo().split("/");
@@ -66,8 +87,7 @@ public class GetEventHandler extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
 		} catch (IOException e) {
-			// TODO log something here.
-			e.printStackTrace();
+			log.error(e);
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
 	}

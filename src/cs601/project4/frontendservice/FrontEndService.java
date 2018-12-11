@@ -4,7 +4,12 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 
 import cs601.project4.model.FrontEndConfig;
-
+/**
+ * Driver class that implements the server
+ * 
+ * @author kmkhetia
+ *
+ */
 public class FrontEndService {
 	public static void main(String args[]) throws Exception {
 		Server server = new Server(FrontEndConfig.getInstance().getAppPort());

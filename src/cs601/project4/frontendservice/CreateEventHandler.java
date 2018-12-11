@@ -7,15 +7,32 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.gson.Gson;
 
+import cs601.project4.eventservice.UserServiceClient;
 import cs601.project4.helper.HelperClass;
 import cs601.project4.model.request.CreateEventModel;
 import cs601.project4.model.response.CreateEventResponseModel;
 
+/**
+ * CreateEventHandler is used to create new Events. 
+ * 
+ * @author kmkhetia
+ *
+ */ 
 public class CreateEventHandler extends HttpServlet {
+	private final static Logger log = LogManager.getLogger(CreateEventHandler.class);
 	private EventServiceClient client = new EventServiceClient();
 	
+	/**
+	 * The method is used to create new Events.
+	 * 
+	 * @param request
+	 * @param response
+	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			BufferedReader in = request.getReader();
@@ -38,8 +55,7 @@ public class CreateEventHandler extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
 		} catch (Exception e) {
-			// TODO log something here.
-			e.printStackTrace();
+			log.error(e);
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
 	}
