@@ -94,7 +94,7 @@ public class EventServiceClient {
 		}
 	}
 	
-	public LinkedList listEvents() {
+	public LinkedList<GetEventResponseModel> listEvents() {
 		try {	
 			HttpURLConnection connection = (HttpURLConnection) (new URL(URL + "/list")).openConnection();
 			connection.setRequestMethod("GET");

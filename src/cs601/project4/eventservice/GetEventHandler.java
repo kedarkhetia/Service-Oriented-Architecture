@@ -19,7 +19,7 @@ public class GetEventHandler extends HttpServlet {
 		try {
 			String[] pathParam = request.getPathInfo().split("/");
 			int eventId;
-			if(pathParam.length > 1 && (eventId = Integer.parseInt(pathParam[1])) != 0) {
+			if(pathParam.length > 1 && (eventId = Integer.parseInt(pathParam[1])) > 0) {
 				Gson gson = new Gson();
 				ResultSet result = DBManager.getInstance().select(eventId);
 				if(result.next()) {

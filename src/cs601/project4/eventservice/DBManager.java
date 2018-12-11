@@ -28,14 +28,20 @@ public class DBManager {
 		this.con = DriverManager.getConnection(urlString+timeZoneSettings, config.getUsername(), config.getPassword());
 	}
 	
-	public static DBManager getInstance() throws SQLException {
-		if(dbm == null) {
-			dbm = new DBManager();
+	public synchronized static DBManager getInstance() {
+		try {
+			if(dbm == null) {
+				dbm = new DBManager();
+			}
+			return dbm;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
 		}
-		return dbm;
 	}
 	
-	public int insert(String eventName, int createdBy, int avail) {
+	public synchronized int insert(String eventName, int createdBy, int avail) {
 		try {
 			PreparedStatement insert = con.prepareStatement(DBQueryStatements.INSERT, Statement.RETURN_GENERATED_KEYS);
 			insert.setString(1, eventName);
@@ -43,14 +49,16 @@ public class DBManager {
 			insert.setInt(3, avail);
 			int val = insert.executeUpdate();
 			if(val == 0) {
-				throw new SQLException("Creating event failed, no rows affected.");
+				//throw new SQLException("Creating event failed, no rows affected.");
+				return 0;
 			}
 			try(ResultSet keys = insert.getGeneratedKeys()) {
 				if (keys.next()) {
 	                return keys.getInt(1);
 	            }
 	            else {
-	                throw new SQLException("Creating event failed, no ID obtained.");
+	            	return 0;
+	                //throw new SQLException("Creating event failed, no ID obtained.");
 	            }
 			}
 		} catch (SQLException e) {
@@ -60,7 +68,7 @@ public class DBManager {
 		}
 	}
 	
-	public ResultSet select(int eventId) {
+	public synchronized ResultSet select(int eventId) {
 		try {
 			PreparedStatement select = con.prepareStatement(DBQueryStatements.SELECT);
 			select.setInt(1, eventId);
@@ -71,7 +79,7 @@ public class DBManager {
 		}
 	}
 	
-	public ResultSet selectAll() {
+	public synchronized ResultSet selectAll() {
 		try {
 			PreparedStatement select = con.prepareStatement(DBQueryStatements.SELECT_ALL);
 			return select.executeQuery();
@@ -81,7 +89,7 @@ public class DBManager {
 		}
 	}
 	
-	public boolean update(int eventId, int avail, int purchased) {
+	public synchronized boolean update(int eventId, int avail, int purchased) {
 		if(avail < 0 || purchased < 0) {
 			return false;
 		}
@@ -96,6 +104,7 @@ public class DBManager {
 			}
 			return true;
 		} catch (SQLException e) {
+			e.printStackTrace();
 			return false;
 		}
 	}

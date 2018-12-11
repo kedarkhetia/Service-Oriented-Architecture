@@ -28,7 +28,7 @@ public class GetUserHandler extends HttpServlet {
 		try {
 			String[] pathParam = request.getPathInfo().split("/");
 			int userId;
-			if(pathParam.length > 1 && (userId = Integer.parseInt(pathParam[1])) != 0) {
+			if(pathParam.length > 1 && (userId = Integer.parseInt(pathParam[1])) > 0) {
 				Gson gson = new Gson();
 				ResultSet userData = DBManager.getInstance().select(userId);
 				ResultSet eventData = DBManager.getInstance().selectEvents(userId);
@@ -47,11 +47,7 @@ public class GetUserHandler extends HttpServlet {
 			else {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			e.printStackTrace();
@@ -61,7 +57,7 @@ public class GetUserHandler extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) {
 		String[] pathParam = request.getPathInfo().split("/");
 		int userId;
-		if(pathParam.length > 3 && (userId = Integer.parseInt(pathParam[1])) != 0 && pathParam[2].equals(TICKETS)) {
+		if(pathParam.length > 3 && (userId = Integer.parseInt(pathParam[1])) > 0 && pathParam[2].equals(TICKETS)) {
 			try {
 				request.setAttribute("userid", userId);
 				if(pathParam[3].equals(PURCHASE)) {

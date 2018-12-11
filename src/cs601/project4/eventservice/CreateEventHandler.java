@@ -1,9 +1,7 @@
 package cs601.project4.eventservice;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +23,7 @@ public class CreateEventHandler extends HttpServlet {
 			CreateEventModel body = gson.fromJson(bodyText, CreateEventModel.class);
 			if(body != null && body.isValid() && userClient.checkUser(body.getUserid())) {
 				int eventId = DBManager.getInstance().insert(body.getEventname(), body.getUserid(), body.getNumtickets());
-				if(eventId != 0) {
+				if(eventId > 0) {
 					response.setContentType("application/json");
 					response.setStatus(HttpServletResponse.SC_OK);
 					CreateEventResponseModel res = new CreateEventResponseModel();
@@ -40,15 +38,11 @@ public class CreateEventHandler extends HttpServlet {
 			else {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO log something here.
 			e.printStackTrace();
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-		}
+		} 
 	}
 	
 	public String readBody(BufferedReader in) {
@@ -58,7 +52,7 @@ public class CreateEventHandler extends HttpServlet {
 			while((line = in.readLine()) != null) {
 				sb.append(line);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

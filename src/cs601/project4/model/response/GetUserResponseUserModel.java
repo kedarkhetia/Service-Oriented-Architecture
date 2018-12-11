@@ -27,7 +27,7 @@ public class GetUserResponseUserModel {
 	}
 	
 	public boolean isValid() {
-		if(username == null || username.isEmpty() || userid == 0) {
+		if(username == null || username.isEmpty() || userid <= 0) {
 			return false;
 		}
 		return true;

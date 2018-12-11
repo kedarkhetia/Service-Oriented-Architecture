@@ -20,7 +20,7 @@ public class GetEventHandler extends HttpServlet {
 		try {
 			String[] pathParam = request.getPathInfo().split("/");
 			int eventId;
-			if(pathParam.length > 1 && (eventId = Integer.parseInt(pathParam[1])) != 0) {
+			if(pathParam.length > 1 && (eventId = Integer.parseInt(pathParam[1])) > 0) {
 				Gson gson = new Gson();
 				GetEventResponseModel responseBody = client.getEvent(eventId);
 				if(responseBody != null) {
@@ -49,7 +49,7 @@ public class GetEventHandler extends HttpServlet {
 			int eventId;
 			int userId;
 			Gson gson = new Gson();
-			if(pathParam.length > 3 && (eventId = Integer.parseInt(pathParam[1])) != 0 && (userId = Integer.parseInt(pathParam[3])) != 0 && pathParam[2].equals("purchase")) {
+			if(pathParam.length > 3 && (eventId = Integer.parseInt(pathParam[1])) > 0 && (userId = Integer.parseInt(pathParam[3])) > 0 && pathParam[2].equals("purchase")) {
 				String bodyText = readBody(request.getReader());
 				PurchaseTicketsModel body = gson.fromJson(bodyText, PurchaseTicketsModel.class);
 				if(body != null && body.isValid()) {

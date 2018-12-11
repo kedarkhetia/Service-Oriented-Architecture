@@ -37,7 +37,7 @@ public class CreateUserHandler extends HttpServlet {
 			else {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO log something here.
 			e.printStackTrace();
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);

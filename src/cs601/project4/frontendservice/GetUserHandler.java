@@ -20,7 +20,7 @@ public class GetUserHandler extends HttpServlet {
 		try {
 			String[] pathParam = request.getPathInfo().split("/");
 			int userId;
-			if(pathParam.length > 1 && (userId = Integer.parseInt(pathParam[1])) != 0) {
+			if(pathParam.length > 1 && (userId = Integer.parseInt(pathParam[1])) > 0) {
 				Gson gson = new Gson();
 				GetUserResponseModel responseBody = client.getUser(new EventServiceClient(), userId);
 				if(responseBody != null) {
@@ -36,7 +36,7 @@ public class GetUserHandler extends HttpServlet {
 			else {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}
@@ -46,7 +46,7 @@ public class GetUserHandler extends HttpServlet {
 		try {
 			String[] pathParam = request.getPathInfo().split("/");
 			int userId;
-			if(pathParam.length > 3 && (userId = Integer.parseInt(pathParam[1])) != 0 && request.getPathInfo().endsWith("/tickets/transfer")) {
+			if(pathParam.length > 3 && (userId = Integer.parseInt(pathParam[1])) > 0 && request.getPathInfo().endsWith("/tickets/transfer")) {
 				Gson gson = new Gson();
 				TransferTicketModel body = gson.fromJson(readBody(request.getReader()), TransferTicketModel.class);
 				if(body != null && body.isValid()) {
@@ -65,7 +65,7 @@ public class GetUserHandler extends HttpServlet {
 			else {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			e.printStackTrace();
 		}

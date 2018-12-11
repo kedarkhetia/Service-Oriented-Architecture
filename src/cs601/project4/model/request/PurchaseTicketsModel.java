@@ -12,9 +12,9 @@ public class PurchaseTicketsModel {
 	}
 
 	public boolean isValid() {
-		if(tickets > 0) {
-			return true;
+		if(tickets <= 0) {
+			return false;
 		}
-		return false;
+		return true;
 	}
 }

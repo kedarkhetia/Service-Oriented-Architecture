@@ -1,6 +1,5 @@
 package cs601.project4.frontendservice;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.LinkedList;
 
@@ -28,7 +27,7 @@ public class ListEventHandler extends HttpServlet {
 			else {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			e.printStackTrace();

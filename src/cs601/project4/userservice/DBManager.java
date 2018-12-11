@@ -28,27 +28,29 @@ public class DBManager {
 		this.con = DriverManager.getConnection(urlString+timeZoneSettings, config.getUsername(), config.getPassword());
 	}
 	
-	public static DBManager getInstance() throws SQLException {
+	public synchronized static DBManager getInstance() throws SQLException {
 		if(dbm == null) {
 			dbm = new DBManager();
 		}
 		return dbm;
 	}
 	
-	public int insert(String userName) {
+	public synchronized int insert(String userName) {
 		try {
 			PreparedStatement insert = con.prepareStatement(DBQueryStatements.INSERT, Statement.RETURN_GENERATED_KEYS);
 			insert.setString(1, userName);
 			int val = insert.executeUpdate();
 			if(val == 0) {
-				throw new SQLException("Creating user failed, no rows affected.");
+				//throw new SQLException("Creating user failed, no rows affected.");
+				return 0;
 			}
 			try(ResultSet keys = insert.getGeneratedKeys()) {
 				if (keys.next()) {
 	                return keys.getInt(1);
 	            }
 	            else {
-	                throw new SQLException("Creating user failed, no ID obtained.");
+	                //throw new SQLException("Creating user failed, no ID obtained.");
+	            	return 0;
 	            }
 			}
 		} catch (SQLException e) {
@@ -59,7 +61,7 @@ public class DBManager {
 	}
 	
 	
-	public ResultSet select(int userId) {
+	public synchronized ResultSet select(int userId) {
 		try {
 			PreparedStatement select = con.prepareStatement(DBQueryStatements.SELECT);
 			select.setInt(1, userId);
@@ -71,7 +73,7 @@ public class DBManager {
 		}
 	}
 	
-	public ResultSet selectEvents(int userId) {
+	public synchronized ResultSet selectEvents(int userId) {
 		try {
 			PreparedStatement selectEvents = con.prepareStatement(DBQueryStatements.SELECT_EVENTS);
 			selectEvents.setInt(1, userId);
@@ -83,7 +85,7 @@ public class DBManager {
 		}
 	}
 	
-	public ResultSet selectTickets(int eventId, int userId) {
+	public synchronized ResultSet selectTickets(int eventId, int userId) {
 		try{
 			PreparedStatement selectTickets = con.prepareStatement(DBQueryStatements.SELECT_TICKETS);
 			selectTickets.setInt(1, eventId);
@@ -96,7 +98,7 @@ public class DBManager {
 		}
 	}
 	
-	public boolean insertTickets(int eventId, int userId, int tickets) {
+	public synchronized boolean insertTickets(int eventId, int userId, int tickets) {
 		if(tickets < 0) {
 			return false;
 		}
@@ -117,7 +119,7 @@ public class DBManager {
 		}
 	}
 	
-	public boolean updateTickets(int eventId, int userId, int tickets) {
+	public synchronized boolean updateTickets(int eventId, int userId, int tickets) {
 		if(tickets < 0) {
 			return false;
 		}

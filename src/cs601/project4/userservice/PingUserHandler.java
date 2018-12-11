@@ -19,7 +19,7 @@ public class PingUserHandler extends HttpServlet {
 		try {
 			String[] pathParam = request.getPathInfo().split("/");
 			int userId;
-			if(pathParam.length > 1 && (userId = Integer.parseInt(pathParam[1])) != 0) {
+			if(pathParam.length > 1 && (userId = Integer.parseInt(pathParam[1])) > 0) {
 				Gson gson = new Gson();
 				ResultSet userData = DBManager.getInstance().select(userId);
 				PingUserResponseModel res;
@@ -33,12 +33,11 @@ public class PingUserHandler extends HttpServlet {
 				response.setContentType("application/json");
 				PrintWriter out = response.getWriter();
 				out.println(gson.toJson(res));
+			} 
+			else {
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			e.printStackTrace();

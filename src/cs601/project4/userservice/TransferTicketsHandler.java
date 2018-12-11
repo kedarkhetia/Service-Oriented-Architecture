@@ -30,7 +30,7 @@ public class TransferTicketsHandler extends HttpServlet {
 	
 	public int transferTickets(TransferTicketModel body, int userId) {
 		try {
-			boolean res;
+			boolean res = false;
 			ResultSet resultSet = DBManager.getInstance().selectTickets(body.getEventid(), userId);
 			ResultSet targetUserSet = DBManager.getInstance().select(body.getTargetuser());
 			if(resultSet.next() && targetUserSet.next()) {
@@ -47,17 +47,9 @@ public class TransferTicketsHandler extends HttpServlet {
 							return HttpServletResponse.SC_BAD_REQUEST;
 						}
 					}
-					else {
-						return HttpServletResponse.SC_BAD_REQUEST;
-					}
-				}
-				else {
-					return HttpServletResponse.SC_BAD_REQUEST;
 				}
 			}
-			else {
-				return HttpServletResponse.SC_BAD_REQUEST;
-			}
+			return HttpServletResponse.SC_BAD_REQUEST;
 		} catch (SQLException e) {
 			// TODO Log something here
 			e.printStackTrace();
