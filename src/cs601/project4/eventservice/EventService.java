@@ -2,10 +2,8 @@ package cs601.project4.eventservice;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHandler;
 
 import cs601.project4.model.EventConfig;
-import cs601.project4.model.UserConfig;
 
 public class EventService {
 	public static void main(String[] args) throws Exception {

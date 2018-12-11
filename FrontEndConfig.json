@@ -1,0 +1,12 @@
+{
+	"appPort":7070,
+	"dbPort":3306,
+	"dbName":"user26",
+	"dbHost":"localhost",
+	"username":"user26",
+	"password":"user26",
+	"userHost":"localhost",
+	"userPort":2080,
+	"eventHost": "localhost",
+	"eventPort": 1080
+}

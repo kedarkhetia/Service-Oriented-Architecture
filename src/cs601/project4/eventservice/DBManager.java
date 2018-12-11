@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import cs601.project4.model.EventConfig;
-import cs601.project4.model.UserConfig;
 
 public class DBManager {
 	private static DBManager dbm;

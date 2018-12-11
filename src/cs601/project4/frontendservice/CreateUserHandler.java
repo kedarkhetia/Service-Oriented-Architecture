@@ -1,4 +1,4 @@
-package cs601.project4.userservice;
+package cs601.project4.frontendservice;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,12 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import cs601.project4.userservice.DBManager;
 import cs601.project4.model.request.CreateUserModel;
 import cs601.project4.model.response.CreateEventResponseModel;
 import cs601.project4.model.response.CreateUserResponseModel;
+import cs601.project4.userservice.DBManager;
 
 public class CreateUserHandler extends HttpServlet {
+	private UserServiceClient client = new UserServiceClient();
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) {
 		try {
@@ -25,15 +26,13 @@ public class CreateUserHandler extends HttpServlet {
 			String bodyText = readBody(in);
 			CreateUserModel body = gson.fromJson(bodyText, CreateUserModel.class);
 			if(body != null && body.isValid()) {
-				int userId = DBManager.getInstance().insert(body.getUsername());
-				if(userId != 0) {
+				CreateUserResponseModel responseBody = client.createUser(body);
+				if(responseBody != null) {
 					response.setContentType("application/json");
 					response.setStatus(HttpServletResponse.SC_OK);
-					CreateUserResponseModel res = new CreateUserResponseModel();
-					res.setUserid(userId);
 					PrintWriter out = response.getWriter();
-					out.println(gson.toJson(res));
-				}
+					out.println(gson.toJson(responseBody));
+				} 
 				else {
 					response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				}
@@ -43,10 +42,6 @@ public class CreateUserHandler extends HttpServlet {
 			}
 		} catch (IOException e) {
 			// TODO log something here.
-			e.printStackTrace();
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		}

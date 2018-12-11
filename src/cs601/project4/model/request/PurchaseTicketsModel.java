@@ -10,4 +10,11 @@ public class PurchaseTicketsModel {
 	public void setTickets(int tickets) {
 		this.tickets = tickets;
 	}
+
+	public boolean isValid() {
+		if(tickets > 0) {
+			return true;
+		}
+		return false;
+	}
 }
