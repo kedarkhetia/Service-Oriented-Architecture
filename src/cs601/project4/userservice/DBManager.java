@@ -39,7 +39,7 @@ public class DBManager {
 		String urlString = "jdbc:mysql://" + config.getDbHost() + 
 				":" + config.getDbPort() + 
 				"/" + config.getDbName();
-		String timeZoneSettings = "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+		String timeZoneSettings = "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&autoReconnect=true";
 		this.con = DriverManager.getConnection(urlString+timeZoneSettings, config.getUsername(), config.getPassword());
 	}
 	
